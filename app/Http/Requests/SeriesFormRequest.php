@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SereisFormRequest extends FormRequest
+class SeriesFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +24,15 @@ class SereisFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => ['required','min:3'],
+            'name' => ['required','min:3'],
         ];
     }
 
     public function messages()
     {
         return [
-            'nome.required'=> 'O campo nome é obrigatorio.',
-            'nome.min'=> 'O nome deve ter no minimo :min letras.',
+            'name.required'=> 'O titulo é obrigatorio.',
+            'name.min'=> 'O titulo deve ter no minimo :min letras.',
         ];
     }
 }
