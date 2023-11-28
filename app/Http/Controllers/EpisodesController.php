@@ -19,7 +19,9 @@ class EpisodesController extends Controller
         $watchedEpisodes = implode(', ', $request->episodes ?? []);
 
         if (empty($watchedEpisodes)) {
-            $season->episodes()->update(['watched' => 0]);
+            DB::transaction(function () use ($season) {
+                $season->episodes()->update(['watched' => 0]);
+            });
             return redirect()->route('episodes.index', $season->id);
         }
 
