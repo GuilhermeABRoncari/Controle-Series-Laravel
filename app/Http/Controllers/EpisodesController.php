@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Season;
 use App\Models\Episode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EpisodesController extends Controller
 {
@@ -15,20 +16,17 @@ class EpisodesController extends Controller
 
     public function update(Request $request, Season $season)
     {
-        $watchedEpisodes = $request->episodes;
-        try {
-            $season->episodes->each(function (Episode $episode) use ($watchedEpisodes) {
-                $episode->watched = in_array($episode->id, $watchedEpisodes);
-            });
+        $watchedEpisodes = implode(', ', $request->episodes ?? []);
 
-            $season->push();
-            return redirect()->route('episodes.index', $season->id);
-        } catch (\Throwable $e) {           
-            $season->episodes->each(function (Episode $episode) {
-                $episode->watched = false;
-            });
-            $season->push();
+        if (empty($watchedEpisodes)) {
+            $season->episodes()->update(['watched' => 0]);
             return redirect()->route('episodes.index', $season->id);
         }
+
+        DB::transaction(function () use ($watchedEpisodes, $season) {
+            $season->episodes()->update(['watched' => DB::raw("case when id in ($watchedEpisodes) then 1 else 0 end")]);
+        });
+
+        return redirect()->route('episodes.index', $season->id);
     }
 }
