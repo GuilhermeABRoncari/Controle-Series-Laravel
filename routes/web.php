@@ -1,5 +1,6 @@
 <?php
 
+use App\Mail\SeriesCreated;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UsersController;
@@ -34,5 +35,6 @@ Route::middleware('autenticador')->group(function () {
     Route::post('/seasons/{season}/episodes', [EpisodesController::class,'update'])->name('episodes.update');
 });
 
-
-
+Route::get('/email', function () {
+    return new SeriesCreated('teste', 2, 2, 6);
+});
