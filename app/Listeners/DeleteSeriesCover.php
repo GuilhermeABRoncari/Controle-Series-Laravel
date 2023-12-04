@@ -27,9 +27,12 @@ class DeleteSeriesCover
      */
     public function handle(SeriesDeletedEvent $event)
     {
-        $coverPath = $event->getSeries()->cover_path;
-        if ($coverPath && Storage::disk('public')->exists($coverPath)) {
-            Storage::disk('public')->delete($coverPath);
+        if ($event->getSeries()->cover_path) {
+            $coverPath = $event->getSeries()->cover_path;
+    
+            if (Storage::disk('public')->exists($coverPath)) {
+                Storage::disk('public')->delete($coverPath);
+            }
         }
     }
 }

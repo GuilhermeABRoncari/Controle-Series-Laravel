@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Events\SeriesCreatedEvent;
 use App\Events\SeriesDeletedEvent;
-use App\Models\User;
 use App\Models\Series;
-use App\Mail\SeriesCreated;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use App\Http\Middleware\Autenticador;
 use App\Repositories\SeriesRepository;
 use App\Http\Requests\SeriesFormRequest;
