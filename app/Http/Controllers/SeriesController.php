@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\SeriesCreatedEvent;
+use App\Events\SeriesDeletedEvent;
 use App\Models\User;
 use App\Models\Series;
 use App\Mail\SeriesCreated;
@@ -55,6 +56,7 @@ class SeriesController extends Controller
     public function destroy(Series $series)
     {
         $series->delete();
+        SeriesDeletedEvent::dispatch($series);
 
         return redirect()->route('series.index')
             ->with('mensagem.sucesso', "Série '{$series->name}' removida com sucesso.");
