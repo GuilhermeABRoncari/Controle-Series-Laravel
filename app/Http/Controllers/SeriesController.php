@@ -35,10 +35,9 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
-        $coverPath = $request->hasFile('cover')
-            ? $request->file('cover')->store('series_cover', 'public') 
-            : 'series_cover/base.jpg';
-    
+        $coverPath = $request->hasFile('cover') ? 
+        $request->file('cover')->store('series_cover', 'public') : 'series_cover/base.jpg';
+
         $request->setCoverPath($coverPath);
 
         $series = $this->repository->add($request);

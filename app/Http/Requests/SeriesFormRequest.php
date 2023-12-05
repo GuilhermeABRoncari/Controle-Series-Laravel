@@ -50,4 +50,19 @@ class SeriesFormRequest extends FormRequest
     {
         return $this->coverPath;
     }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getSeasonsQty(): int
+    {
+        return $this->seasonsQty;
+    }
+
+    public function getEpisodesPerSeason(): int
+    {
+        return $this->episodesPerSeason;
+    }
 }

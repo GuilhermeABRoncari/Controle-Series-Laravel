@@ -27,7 +27,7 @@ class DeleteSeriesCover
      */
     public function handle(SeriesDeletedEvent $event)
     {
-        if ($event->getSeries()->cover_path) {
+        if ($event->getSeries()->cover_path && $event->getSeries()->cover_path !== 'series_cover/base.jpg') {
             $coverPath = $event->getSeries()->cover_path;
     
             if (Storage::disk('public')->exists($coverPath)) {
